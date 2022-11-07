@@ -5,11 +5,10 @@
   [en.params]
     languageISO = "EN"
     languageTag = "en-US"
-
 [kor]
   languageName = "Korean"
   contentDir = "content/kor"
   weight = 15
-  [de.params]
+  [kor.params]
     languageISO = "KOR"
     languageTag = "kor-KOR"
