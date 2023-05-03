@@ -11,6 +11,7 @@ import cpp from 'highlight.js/lib/languages/cpp';
 import css from 'highlight.js/lib/languages/css';
 import dos from 'highlight.js/lib/languages/dos';
 import python from 'highlight.js/lib/languages/python';
+import diff from 'highlight.js/lib/languages/diff';
 
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('json', json);
@@ -26,6 +27,7 @@ hljs.registerLanguage('idl', cpp);
 hljs.registerLanguage('dos', dos);
 hljs.registerLanguage('xml', xml);
 hljs.registerLanguage('python', python);
+hljs.registerLanguage('diff', diff);
 
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('pre code:not(.language-mermaid)').forEach((block) => {
