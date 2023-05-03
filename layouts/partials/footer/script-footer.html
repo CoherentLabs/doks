@@ -73,6 +73,15 @@
 </script>
 {{ $js := $slice | resources.Concat "main.js" -}}
 {{ if eq (hugo.Environment) "development" -}}
+  {{ if eq .Title "Search"}}
+    {{ if (.Site.Params.options.flexSearch) -}}
+    <script src="{{ $fullSearch.RelPermalink }}" defer></script>
+    {{ end -}}
+  {{ else }}
+    {{ if (.Site.Params.options.flexSearch) -}}
+    <script src="{{ $index.RelPermalink }}" defer></script>
+    {{ end -}}
+  {{ end -}}
   {{ if .Site.Params.options.bootStrapJs -}}
     <script src="{{ $bs.RelPermalink }}" defer></script>
   {{ end -}}
@@ -90,15 +99,6 @@
   {{ if (.Site.Params.options.flexSearch) -}}
     <script src="{{ $searchUtilities.RelPermalink }}" defer></script>
   {{ end -}}
-  {{ if eq .Title "Search"}}
-    {{ if (.Site.Params.options.flexSearch) -}}
-    <script src="{{ $fullSearch.RelPermalink }}" defer></script>
-    {{ end -}}
-  {{ else }}
-    {{ if (.Site.Params.options.flexSearch) -}}
-    <script src="{{ $index.RelPermalink }}" defer></script>
-    {{ end -}}
-  {{ end -}}
 {{ else -}}
   {{ $js := $js | minify | fingerprint "sha256" -}}
   {{ $searchUtilities := $searchUtilities | minify | fingerprint "sha256" -}}
@@ -112,6 +112,15 @@
   {{ $katex := $katex | minify | fingerprint "sha256" -}}
   {{ $katexAutoRender := $katexAutoRender | minify | fingerprint "sha256" -}}
   {{ $mermaid := $mermaid | minify | fingerprint "sha256" -}}
+  {{ if eq .Title "Search"}}
+    {{ if and (.Site.Params.options.flexSearch) -}}
+      <script src="{{ $fullSearch.Permalink }}" integrity="{{ $fullSearch.Data.Integrity }}" crossorigin="anonymous" defer></script>
+    {{ end -}}
+  {{ else }}
+    {{ if and (.Site.Params.options.flexSearch) -}}
+      <script src="{{ $index.Permalink }}" integrity="{{ $index.Data.Integrity }}" crossorigin="anonymous" defer></script>
+    {{ end -}}
+  {{ end -}}
   {{ if .Site.Params.options.bootStrapJs -}}
     <script src="{{ $bs.RelPermalink }}" integrity="{{ $bs.Data.Integrity }}" crossorigin="anonymous" defer></script>
   {{ end -}}
@@ -128,14 +137,5 @@
   {{ end -}}
   {{ if (.Site.Params.options.flexSearch) -}}
     <script src="{{ $searchUtilities.Permalink }}" integrity="{{ $searchUtilities.Data.Integrity }}" crossorigin="anonymous" defer></script>
-  {{ end -}}
-  {{ if eq .Title "Search"}}
-    {{ if and (.Site.Params.options.flexSearch) -}}
-      <script src="{{ $fullSearch.Permalink }}" integrity="{{ $fullSearch.Data.Integrity }}" crossorigin="anonymous" defer></script>
-    {{ end -}}
-  {{ else }}
-    {{ if and (.Site.Params.options.flexSearch) -}}
-      <script src="{{ $index.Permalink }}" integrity="{{ $index.Data.Integrity }}" crossorigin="anonymous" defer></script>
-    {{ end -}}
   {{ end -}}
 {{ end -}}
