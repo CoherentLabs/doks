@@ -11,7 +11,7 @@ baseUrl = baseUrl.endsWith('/') ? baseUrl : baseUrl + '/';
   let entries = [];
   let searchScheduled = false;
   search.addEventListener('input', show_results, true);
-  form.style.display = 'block';
+  show_results();
 
   function showMoreResults(searchQuery) {
     if (searchQuery) window.localStorage.setItem('searchQuery', searchQuery);
