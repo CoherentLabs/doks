@@ -1,6 +1,9 @@
 var suggestions = document.getElementById('suggestions');
 var search = document.getElementById('search');
 
+const MAX_TITLE_SUGGESTION_ELEMENTS = 5;
+const MAX_CONTENT_SUGGESTION_ELEMENTS = 8;
+
 if (search !== null) {
   document.addEventListener('keydown', inputFocus);
 }
@@ -87,8 +90,11 @@ getPostsJSON();
 function getMatchIndices(str, regex, limit = -1) {
   const result = [];
   let match, i = 0;
+
   try {
-    regex = new RegExp(regex, 'g');
+    // Remove excess whitespaces to avoid a potential process blocking regex/operation.
+    regex = regex.trim().replace(/ +/g, ' ').split(' ').join('.*');
+    regex = new RegExp(`(${regex})`, 'g');
   } catch (error) {
     return result;
   }
@@ -149,8 +155,10 @@ function displayNoResultsElement(searchQuery) {
   return false;
 }
 
-function constructTitleSuggestions(entries, resultTitlesIds, suggestionDescriptionClass) {
+function constructTitleSuggestions(entries, resultTitlesIds, suggestionDescriptionClass, isLiveSearch = false) {
   for (const id of resultTitlesIds) {
+    if (isLiveSearch && entries.length === MAX_TITLE_SUGGESTION_ELEMENTS) break;
+
     const storedEntry = index.get(id);
     const entry = document.createElement('div');
     const a = document.createElement('a');
@@ -179,8 +187,9 @@ function constructTitleSuggestions(entries, resultTitlesIds, suggestionDescripti
   }
 }
 
-function constructContentSuggestions(entries, searchQuery, resultIds, suggestionDescriptionClass, resultsLimit) {
+function constructContentSuggestions(entries, searchQuery, resultIds, suggestionDescriptionClass, isLiveSearch = false, resultsLimit) {
   for (const id of resultIds) {
+    if (isLiveSearch && entries.length === MAX_CONTENT_SUGGESTION_ELEMENTS) break;
     const storedEntry = index.get(id);
     const startPositions = getMatchIndices(storedEntry.content.toLowerCase(), searchQuery.toLowerCase(), resultsLimit);
 
@@ -201,18 +210,22 @@ function constructContentSuggestions(entries, searchQuery, resultIds, suggestion
       a.appendChild(description);
 
       entries.push(entry);
+      if (isLiveSearch && entries.length === MAX_CONTENT_SUGGESTION_ELEMENTS) break;
     }
   }
 }
 
-function getIndexResults(searchQuery, limit) {
+/**
+ * 
+ * @param {object} index The FlexSearch.Document object.
+ * @param {string} searchQuery The input search value.
+ * @param {number} [limit=500] The limit for how many documents will be searched in (+2 comming from FlexSearch). Full Search will use the default.
+ * @returns 
+ */
+function getIndexResults(index, searchQuery, limit = 500) {
   let results = [];
 
-  if (limit) {
-    results = index.search(searchQuery, { limit: limit });
-  } else {
-    results = index.search(searchQuery);
-  }
+  results = index.search(searchQuery, { limit: limit });
 
   // flatten results since index.search() returns results for each indexed field
   let resultIds = [], resultTitlesIds = [];
