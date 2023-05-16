@@ -1,0 +1,21 @@
+{{- $page_src := .Get 0 -}}
+{{- with .Site.GetPage $page_src -}}
+<!--  Normal page -->
+{{- .Content -}}
+{{- else -}}
+<!-- Snippet page -->
+{{ $bundle_to_find := "snippets" }}
+{{ $headless_bundle := "" }}
+{{ range $index, $num :=(seq 5) }}
+    {{ if (eq $headless_bundle "") }}
+        {{ with $.Page.GetPage $bundle_to_find}}
+            {{- $headless_bundle = . -}}
+        {{ end }}
+    {{ end }}
+    {{ $bundle_to_find = path.Join ".." $bundle_to_find }}
+{{ end }}
+
+{{- with $headless_bundle.Resources.GetMatch $page_src -}}
+{{- .Content -}}
+{{- end -}}
+{{- end -}}

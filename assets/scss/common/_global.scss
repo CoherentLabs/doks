@@ -129,7 +129,7 @@ body {
       position: -webkit-sticky;
       position: sticky;
       top: 4rem;
-      z-index: 1000;
+      z-index: 998;
       height: calc(100vh - 4rem);
     }
 
@@ -285,4 +285,8 @@ body {
   .modal-backdrop.show {
     opacity: 0;
   }
+}
+
+.doks-subnavbar{
+  z-index: 999;
 }

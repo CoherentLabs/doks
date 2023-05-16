@@ -1,0 +1,16 @@
+{{- $title := .Get 0 -}}
+{{- $linkcxx := .Get 1 -}}
+{{- $linku3d := .Get 2 -}}
+{{- $type := index .Site.Params.type -}}
+{{- $path := "" -}}
+{{- if (and (eq $type "cxx") (ne $linkcxx "")) -}}
+{{- $path = $linkcxx -}}
+{{- end -}}
+{{- if (and (eq $type "unity3d") (ne $linku3d "")) -}}
+{{- $path = $linku3d -}}
+{{- end -}}
+{{- if (ne $path "") -}}
+{{-  $relreflink := relref . (print (lower $path)) -}}
+{{-  printf `<a href="%s">%s</a>` $relreflink $title | markdownify -}}
+{{- end -}}
+

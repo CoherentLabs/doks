@@ -1,26 +1,27 @@
 <!-- Auto collapsible section menu -->
 <ul class="list-unstyled collapsible-sidebar">
-  {{ $currentPage := . -}}
   <li class="mb-1">
-    <button data-link="home" class="btn btn-toggle align-items-centers">
+    <button class="static-page btn btn-toggle align-items-centers">
       <a class="docs-link rounded {{ if .IsHome }}active{{ end }}" href="{{ .Site.Home.Permalink }}">Home</a></li>
     </button>
   </li>
-  {{ if .Site.Params.options.changelog}}
-  <li class="mb-1">
-    {{ $active := in $currentPage.RelPermalink "changelog" }}
-    <button data-link="home" class="btn btn-toggle align-items-centers">
-      <a class="docs-link rounded {{ if $active }}active{{ end }}" href="{{ .Site.Home.Permalink }}/changelog">Changelog</a></li>
-    </button>
-  </li>
-  {{end}}
+  {{ $currentPage := . -}}
     {{ range .Site.Sections }}
     {{ if eq .Title "Search"}}
+    {{ else if eq .Layout "staticpage" }}
+    {{ $active := in $currentPage.RelPermalink .RelPermalink }}
+
+    <li class="mb-1">
+
+      <button class="static-page btn btn-toggle align-items-centers">
+        <a class="docs-link rounded{{ if $active }} active{{ end }}" href="{{ .Permalink }}">{{ .Title }}</a></li>
+      </button>
+    </li>
     {{else}}
     {{ $active := in $currentPage.RelPermalink .RelPermalink }}
       <li class="mb-1">
         <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#section-{{ md5 .Title }}" aria-expanded="{{ if $active }}true{{ else }}false{{ end }}">
-          {{ .Title }}
+        {{  replace .Title "Gameface" .Site.Params.product }}
         </button>
         <div class="collapse{{ if $active }} show{{ end }}" id="section-{{ md5 .Title }}">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
