@@ -5,19 +5,25 @@
             {{ partial "sidebar/docs-menu.html" . }}
         </nav>
     </div>
-    <main class="docs-content col-lg-11 col-xl-11 mx-xl-auto">
-        <p class="lead">{{ .Params.lead | safeHTML }}</p>
+    <main style="padding:0; flex: 1 0 0;" class="docs-content col-lg-11 col-xl-11 mx-xl-auto">
         <nav class="doks-subnavbar py-2 sticky-lg-top{{ if eq .Site.Params.options.flexSearch false }} d-lg-none{{ end }}"
             aria-label="Secondary navigation">
-            <div class="container-xxl d-flex flex-row align-items-md-center flex-wrap">
-                <form id="form" class="doks-search list-search position-relative flex-grow-1 me-2">
-                    <input id="search" class="form-control is-search list-search" type="search" placeholder="Search..."
-                        aria-label="Search..." autocomplete="off">
-                </form>
-                <button id="start-search-btn" type="submit"
-                    style="background: none; border:none; width: 38px; height: 38px;">
-                    <img src="{{.Site.BaseURL}}/images/search.png">
-                </button>
+            <div class="container-xxl d-flex align-items-md-center px-4">
+                <div class="d-flex flex-row justify-content-between w-100">
+                    <button class="btn btn-menu d-block d-lg-none order-0" style="padding: 0;margin-right: 5px; margin-left: -2px;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDoks" aria-controls="offcanvasDoks" aria-label="Open main menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                    </button>
+                    <div style="padding: 0;" class="container-xxl d-flex flex-row align-items-md-center">
+                        <form id="form" class="doks-search list-search position-relative flex-grow-1 me-2">
+                            <input id="search" class="form-control is-search list-search" type="search" placeholder="Search..."
+                                aria-label="Search..." autocomplete="off">
+                        </form>
+                        <button id="start-search-btn" type="submit"
+                            style="background: none; border:none; width: 38px; height: 38px;">
+                            <img src="{{.Site.BaseURL}}/images/search.png">
+                        </button>
+                    </div>
+                </div>
             </div>
         </nav>
         <div id="suggestions-wrapper">

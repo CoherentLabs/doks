@@ -20,11 +20,11 @@
 				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
 						{{ partial "main/breadcrumb" . -}}
-						<li class="breadcrumb-item active" aria-current="page">{{ .Title }}</li>
+						<li class="breadcrumb-item active" aria-current="page">{{  replace .Title "Gameface" .Site.Params.product }}</li>
 					</ol>
 				</nav>
 			{{ end }}
-			<h1>{{ .Title }}</h1>
+			<h1>{{  replace .Title "Gameface" .Site.Params.product }}</h1>
 			<p class="lead">{{ .Params.lead | safeHTML }}</p>
 			{{ if ne .Params.toc false -}}
 			<nav class="d-xl-none" aria-label="Quaternary navigation">

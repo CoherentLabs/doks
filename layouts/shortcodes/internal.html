@@ -1,0 +1,3 @@
+{{- if eq .Site.Params.showInternal true -}}
+{{- .Inner | markdownify -}}
+{{- end -}}

@@ -68,8 +68,10 @@
 {{ end -}}
 
 <script>
-  const hasMultipleLanguages = '{{ if gt (len .Site.Languages) 0 }}true{{end}}';
-  window.siteLanguage = hasMultipleLanguages === 'true' ? '{{.Site.Language.Lang}}' : '';
+  const hasMultipleLanguages = '{{ if .Site.IsMultiLingual }}true{{end}}';
+  window.siteLanguage = hasMultipleLanguages === 'true' ? '{{.Site.LanguagePrefix}}' : '';
+  // .Site.LanguagePrefix returns '' or '/lang-name' so we don't need the first slash and we are removing it here
+  if (window.siteLanguage) window.siteLanguage = window.siteLanguage.substring(1, window.siteLanguage.length);
 </script>
 {{ $js := $slice | resources.Concat "main.js" -}}
 {{ if eq (hugo.Environment) "development" -}}

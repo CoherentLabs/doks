@@ -17,3 +17,16 @@
   @extend .btn;
   @extend .btn-secondary;
 }
+
+.landing-page-item {
+  text-decoration: none;
+  border: 2px solid $gray-300;
+  margin: 10px;
+  padding: 10px;
+}
+
+.landing-page-image {
+  background-size: cover;
+  width: 100%;
+  height: 100px; 
+}

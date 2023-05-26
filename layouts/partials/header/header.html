@@ -8,14 +8,11 @@
 
 <header class="navbar navbar-expand-lg navbar-light doks-navbar">
   <nav class="container-xxl justify-content-start" aria-label="Main navigation">
-    <button class="btn btn-menu d-block d-lg-none order-0 m-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDoks" aria-controls="offcanvasDoks" aria-label="Open main menu">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-    </button>
-    <a class="navbar-brand p-0 me-auto coh-title" href="{{ .Site.Home.Permalink }}" aria-label="{{ .Site.Params.Title }}">{{ .Site.Params.Title }}</a>
+    {{ partial "header/logo.html" . }}
 
-    <div class="offcanvas offcanvas-start border-0 py-md-1 order-1" tabindex="-1" id="offcanvasDoks" data-bs-backdrop="true" aria-labelledby="offcanvasDoksLabel">
-      <div class="offcanvas-header d-lg-none">
-        <h2 class="h5 offcanvas-title ps-2" id="offcanvasDoksLabel"><a class="text-dark" href="{{ .Site.Home.Permalink }}">{{ .Site.Params.Title }}</a></h2>
+    <div class="offcanvas offcanvas-start border-0 py-1 order-1" tabindex="-1" id="offcanvasDoks" data-bs-backdrop="true" aria-labelledby="offcanvasDoksLabel">
+      <div class="offcanvas-header d-lg-none" style="padding-left:1.5rem; padding-top:0.25rem; padding-bottom: 0.5rem;">
+        {{ partial "header/logo.html" . }}
         <button type="button" class="btn-close text-reset me-2" data-bs-dismiss="offcanvas" aria-label="Close main menu"></button>
       </div>
       <div class="offcanvas-body px-4 d-md-flex flex-column">
@@ -68,7 +65,7 @@
       </div>
     </div>
 
-    <div class="d-md-flex d-none d-lg-none">
+    <div class="d-md-flex d-none d-lg-none" style="flex: 1 0 0; flex-direction: row-reverse;">
       <ul class="nav flex-column flex-md-row ms-lg-auto me-lg-n5 pe-lg-3">
         {{ range .Site.Menus.social -}}
           <li class="nav-item">
@@ -125,8 +122,11 @@
 <nav class="doks-subnavbar py-2 sticky-sm-top{{ if eq .Site.Params.options.flexSearch false }} d-lg-none{{ end }}" aria-label="Secondary navigation">
   <div class="container-xxl d-flex align-items-md-center">
     <div class="d-flex flex-row justify-content-between w-100">
+      <button class="btn btn-menu d-block d-lg-none order-0" style="padding: 0;margin-right: 5px; margin-left: -2px;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDoks" aria-controls="offcanvasDoks" aria-label="Open main menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
       {{ if .Site.Params.options.flexSearch -}}
-        <div class="doks-search d-inline-flex me-auto placeholder-glow">
+        <div class="d-inline-flex me-auto placeholder-glow">
           <form id="form-search" class="doks-search position-relative me-md-auto d-flex">
             <input id="search" class="form-control is-search me-2" type="search" placeholder="Search..."
               aria-label="Search..." autocomplete="off">
@@ -136,7 +136,7 @@
           </form>
         </div>
         {{ if eq .Site.Params.options.docsVersioning true -}}
-        <span class="navbar-text fs-6 d-block">v{{ .Site.Params.docsVersion }}</span>
+        <span class="navbar-text fs-6 d-block">v{{ .Site.Params.docsVersion | default "0.0.0.0"}}</span>
         {{ end -}}
       {{ end -}}
     </div>
