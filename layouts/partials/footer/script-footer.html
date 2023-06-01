@@ -63,7 +63,7 @@
 
 {{ if .Site.Params.options.cookieConsent }}
   {{ $cookieConsentPlugin := resources.Get "vanilla-cookieconsent/cookieconsent.js" -}}
-  {{ $cookieConsentInit := resources.Get "js/cookieconsent-init.js" | minify | fingerprint "sha256" -}}
+  {{ $cookieConsentInit := resources.Get "js/cookieconsent-init.js" | resources.ExecuteAsTemplate "js/cookieconsent-init.js" . | minify | fingerprint "sha256" -}}
   {{ $slice = $slice | append $cookieConsentPlugin | append $cookieConsentInit -}}
 {{ end -}}
 
