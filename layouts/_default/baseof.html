@@ -34,35 +34,6 @@
       gtag('config', {{ .Site.Params.tagManagerId }});
     </script>
 
-    <!-- Send Custom Event to Google Analytics for the live search functionality. -->
-    <script>
-      window.addEventListener('DOMContentLoaded', () => {
-        const searchSuggestionsWrapper = document.getElementById('suggestions');
-        if (!searchSuggestionsWrapper) return;
-
-        searchSuggestionsWrapper.addEventListener('click', (event) => {
-          const target = event.target;
-
-          for (const suggestionElement of searchSuggestionsWrapper.children) {
-            if (!suggestionElement.contains(target)) continue;
-
-            // This guards when the event is triggered on the padding area of the "search result" element.
-            // The page from the result will only be loaded when clicked on the <a> or any element inside.
-            if (target === suggestionElement) return;
-
-            const suggestionTitle = suggestionElement.querySelector('.suggestion__title');
-
-            // When there are no results for the search term.
-            if (!suggestionTitle) return;
-            const searchTerm = document.getElementById('search').value;
-
-            window.dataLayer.push({
-              'event': 'liveSearch',
-              'searchTerm': searchTerm
-            });
-          }
-        });
-      });
-    </script>
+    {{ partial "content/google-analytics-events.html" . }}
   </body>
 </html>
