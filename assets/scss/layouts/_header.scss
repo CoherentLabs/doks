@@ -14,21 +14,6 @@
   font-weight: $headings-font-weight;
 }
 
-table.table-dark tr:nth-child(even) > * {
-  background-color: #646464;
-}
-table.table-dark tr:hover > * {
-  background-color:rgba(255, 255, 255, 0.1) !important;
-}
-
-table tr:hover > * {
-  background-color:rgba(0, 0, 0, 0.1) !important;
-}
-
-table.table tr:nth-child(even) > * {
-  background-color: rgba(238, 238, 238, 1.0);
-}
-
 /*
 .navbar-light .navbar-brand,
 .navbar-light .navbar-brand:hover,
