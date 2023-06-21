@@ -114,3 +114,6 @@ lastMod = false
   [menu.section]
     auto = true
     collapsibleSidebar = true
+
+# Google Analytics
+tagManagerId = "G-HCQWPQKQH8"
