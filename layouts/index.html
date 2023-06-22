@@ -11,9 +11,9 @@
 		</nav>
 		{{ end -}}
 		{{ if .Params.toc -}}
-		<main class="docs-content col-lg-11 col-xl-9">
+		<main class="docs-content col-lg-11 col-xl-9 {{ if (eq $.Site.Params.Title "Gameface Game UI Components") }}guic-docs-main{{ end }}">
 		{{ else -}}
-		<main class="docs-content col-lg-11 col-xl-9 mx-xl-auto">
+		<main class="docs-content col-lg-11 col-xl-9 mx-xl-auto {{ if (eq $.Site.Params.Title "Gameface Game UI Components") }}guic-docs-main{{ end }}">
 		{{ end -}}
 			<h1>{{ .Title }}</h1>
 			<p class="lead">{{ .Params.lead | safeHTML }}</p>
