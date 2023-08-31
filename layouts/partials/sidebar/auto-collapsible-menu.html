@@ -21,7 +21,7 @@
     {{ $active := in $currentPage.RelPermalink .RelPermalink }}
       <li class="mb-1">
         <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#section-{{ md5 .Title }}" aria-expanded="{{ if $active }}true{{ else }}false{{ end }}">
-        {{  replace .Title "Gameface" .Site.Params.product }}
+        {{ .Title }}
         </button>
         <div class="collapse{{ if $active }} show{{ end }}" id="section-{{ md5 .Title }}">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
