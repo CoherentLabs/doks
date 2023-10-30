@@ -1,10 +1,11 @@
-<h3 style="text-align:center;">
-    <a href="https://coherent-labs.com/get-in-touch/">
-        Version {{ .Get "version" }}
-        <span> – released {{ .Get "date" }}</span>
-    </a>
-</h3>
+{{ $optBlock := dict "display" "inline" }}
+  {{ with .Get "version" }}
+  ## Version {{ . | $.Page.RenderString $optBlock }}
+{{ end }}
 <hr>
+<a href="https://coherent-labs.com/get-in-touch/">
+    <span>Released {{ .Get "date" }}</span>
+</a>
 <table class="table table-striped">
 {{ .Inner }}
 </table>
