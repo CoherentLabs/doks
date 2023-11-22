@@ -1,3 +1,10 @@
+/* eslint-disable max-lines-per-function */
+/* eslint-disable prefer-const */
+/* eslint-disable one-var */
+/* eslint-disable require-jsdoc */
+/* eslint-disable indent */
+/* eslint-disable linebreak-style */
+/* eslint-disable no-var */
 var suggestions = document.getElementById('suggestions');
 var search = document.getElementById('search');
 
@@ -12,6 +19,7 @@ function inputFocus(e) {
   if (e.ctrlKey && e.key === '/') {
     e.preventDefault();
     search.focus();
+  // eslint-disable-next-line indent
   }
 }
 
@@ -109,7 +117,7 @@ function getMatchIndices(str, regex, limit = -1) {
 }
 
 function getFoundWordFromDescription(description, value, startPosition) {
-  const maxLeftSymbols = 20, maxRightSymbols = 70;
+  const maxLeftSymbols = 10, maxRightSymbols = 30;
   let left = '',
     right = '',
     index = startPosition - 1,
@@ -192,26 +200,34 @@ function constructContentSuggestions(entries, searchQuery, resultIds, suggestion
     if (isLiveSearch && entries.length === MAX_CONTENT_SUGGESTION_ELEMENTS) break;
     const storedEntry = index.get(id);
     const startPositions = getMatchIndices(storedEntry.content.toLowerCase(), searchQuery.toLowerCase(), resultsLimit);
+    const allMatches = getMatchIndices(storedEntry.content.toLowerCase(), searchQuery.toLowerCase());
+
+    const description = document.createElement('div');
+    const a = document.createElement('a');
+    const title = document.createElement('div');
+    title.textContent = storedEntry.title;
+    title.classList.add('suggestion__title');
+    const entry = document.createElement('div');
+    let descriptionText = '';
+    a.href = storedEntry.href;
 
     for (const startPosition of startPositions) {
-      const entry = document.createElement('div');
-      const a = document.createElement('a');
-      a.href = storedEntry.href;
-      entry.appendChild(a);
-
-      const title = document.createElement('div');
-      title.textContent = storedEntry.title;
-      title.classList.add('suggestion__title');
-      a.appendChild(title);
-
-      const description = document.createElement('div');
-      description.innerHTML = getFoundWordFromDescription(storedEntry.content, searchQuery, startPosition);
-      description.classList.add(suggestionDescriptionClass);
-      a.appendChild(description);
-
+      descriptionText += getFoundWordFromDescription(storedEntry.content, searchQuery, startPosition) + '...';
       entries.push(entry);
       if (isLiveSearch && entries.length === MAX_CONTENT_SUGGESTION_ELEMENTS) break;
     }
+
+    const fullResultsLengthInfo = document.createElement('span');
+    fullResultsLengthInfo.style['font-size'] = '13px';
+    fullResultsLengthInfo.style.display = 'inline';
+    fullResultsLengthInfo.innerHTML = `[${allMatches.length} more occurrences]`;
+
+    entry.appendChild(a);
+    a.appendChild(title);
+    description.innerHTML = descriptionText;
+    description.appendChild(fullResultsLengthInfo);
+    description.classList.add(suggestionDescriptionClass);
+    a.appendChild(description);
   }
 }
 
