@@ -1,10 +1,3 @@
-/* eslint-disable max-lines-per-function */
-/* eslint-disable prefer-const */
-/* eslint-disable one-var */
-/* eslint-disable require-jsdoc */
-/* eslint-disable indent */
-/* eslint-disable linebreak-style */
-/* eslint-disable no-var */
 var suggestions = document.getElementById('suggestions');
 var search = document.getElementById('search');
 
@@ -195,6 +188,40 @@ function constructTitleSuggestions(entries, resultTitlesIds, suggestionDescripti
   }
 }
 
+function constructTitle(storedEntry) {
+  const title = document.createElement('div');
+  title.textContent = storedEntry.title;
+  title.classList.add('suggestion__title');
+
+  return title;
+}
+
+function constructAnchor(title, storedEntry) {
+  const a = document.createElement('a');
+  a.href = storedEntry.href;
+  a.appendChild(title);
+
+  return a;
+}
+
+function constructFullSearchLengthInfo(allMatches) {
+  const fullResultsLengthInfo = document.createElement('span');
+  fullResultsLengthInfo.style['font-size'] = '13px';
+  fullResultsLengthInfo.style.display = 'inline';
+  fullResultsLengthInfo.innerHTML = `[${allMatches.length} more occurrences]`;
+
+  return fullResultsLengthInfo;
+}
+
+function constructDescription(descriptionText, fullResultsLengthInfo, suggestionDescriptionClass) {
+  const description = document.createElement('div');
+  description.innerHTML = descriptionText;
+  description.appendChild(fullResultsLengthInfo);
+  description.classList.add(suggestionDescriptionClass);
+
+  return description;
+}
+
 function constructContentSuggestions(entries, searchQuery, resultIds, suggestionDescriptionClass, isLiveSearch = false, resultsLimit) {
   for (const id of resultIds) {
     if (isLiveSearch && entries.length === MAX_CONTENT_SUGGESTION_ELEMENTS) break;
@@ -202,14 +229,10 @@ function constructContentSuggestions(entries, searchQuery, resultIds, suggestion
     const startPositions = getMatchIndices(storedEntry.content.toLowerCase(), searchQuery.toLowerCase(), resultsLimit);
     const allMatches = getMatchIndices(storedEntry.content.toLowerCase(), searchQuery.toLowerCase());
 
-    const description = document.createElement('div');
-    const a = document.createElement('a');
-    const title = document.createElement('div');
-    title.textContent = storedEntry.title;
-    title.classList.add('suggestion__title');
+    const title = constructTitle(storedEntry);
+    const a = constructAnchor(title, storedEntry);
     const entry = document.createElement('div');
     let descriptionText = '';
-    a.href = storedEntry.href;
 
     for (const startPosition of startPositions) {
       descriptionText += getFoundWordFromDescription(storedEntry.content, searchQuery, startPosition) + '...';
@@ -217,16 +240,10 @@ function constructContentSuggestions(entries, searchQuery, resultIds, suggestion
       if (isLiveSearch && entries.length === MAX_CONTENT_SUGGESTION_ELEMENTS) break;
     }
 
-    const fullResultsLengthInfo = document.createElement('span');
-    fullResultsLengthInfo.style['font-size'] = '13px';
-    fullResultsLengthInfo.style.display = 'inline';
-    fullResultsLengthInfo.innerHTML = `[${allMatches.length} more occurrences]`;
-
+    const fullResultsLengthInfo = constructFullSearchLengthInfo(allMatches);
+    const description = constructDescription(descriptionText, fullResultsLengthInfo, suggestionDescriptionClass);
     entry.appendChild(a);
-    a.appendChild(title);
-    description.innerHTML = descriptionText;
-    description.appendChild(fullResultsLengthInfo);
-    description.classList.add(suggestionDescriptionClass);
+
     a.appendChild(description);
   }
 }
