@@ -204,11 +204,11 @@ function constructAnchor(title, storedEntry) {
   return a;
 }
 
-function constructFullSearchLengthInfo(allMatches) {
+function constructFullSearchLengthInfo(remainingMatchesLength) {
   const fullResultsLengthInfo = document.createElement('span');
   fullResultsLengthInfo.style['font-size'] = '13px';
   fullResultsLengthInfo.style.display = 'inline';
-  fullResultsLengthInfo.innerHTML = `[${allMatches.length} more occurrences]`;
+  fullResultsLengthInfo.innerHTML = `[${remainingMatchesLength} more occurrences]`;
 
   return fullResultsLengthInfo;
 }
@@ -235,12 +235,12 @@ function constructContentSuggestions(entries, searchQuery, resultIds, suggestion
     let descriptionText = '';
 
     for (const startPosition of startPositions) {
-      descriptionText += getFoundWordFromDescription(storedEntry.content, searchQuery, startPosition) + '...';
+      descriptionText += getFoundWordFromDescription(storedEntry.content, searchQuery, startPosition) + '... ';
       entries.push(entry);
       if (isLiveSearch && entries.length === MAX_CONTENT_SUGGESTION_ELEMENTS) break;
     }
 
-    const fullResultsLengthInfo = constructFullSearchLengthInfo(allMatches);
+    const fullResultsLengthInfo = constructFullSearchLengthInfo(allMatches.length - resultsLimit);
     const description = constructDescription(descriptionText, fullResultsLengthInfo, suggestionDescriptionClass);
     entry.appendChild(a);
 
