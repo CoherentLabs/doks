@@ -4,10 +4,41 @@ table {
   margin: 3rem 0;
 }
 
-.guic-docs-main table.table-dark tr:nth-child(even) > * {
+.guic-docs-main table.table-dark tr:nth-child(even)>* {
   background-color: #646464;
 }
 
-.guic-docs-main table.table tr:nth-child(even) > * {
+.guic-docs-main table.table tr:nth-child(even)>* {
   background-color: rgba(238, 238, 238, 1.0);
+}
+
+@include media-breakpoint-down(sm) {
+  .sticky-table table thead {
+    top: 0px !important;
+  }
+}
+
+@include media-breakpoint-up(sm) {
+  .sticky-table table thead {
+    top: 56px !important;
+  }
+}
+
+.sticky-table table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.sticky-table table thead tr th {
+  border-bottom: 2px solid currentColor !important;
+}
+
+.sticky-table table thead {
+  position: sticky;
+  background-color: var(--bs-body-bg);
+  top: 57px;
+}
+
+.sticky-table table tbody {
+  border-top: none !important;
 }
