@@ -1,0 +1,9 @@
+{{ $stickyClass := "" }}
+{{ $sticky := .Get "sticky" }}
+{{ if and $sticky (eq $sticky "true") }}
+  {{ $stickyClass = "sticky-table" }}
+{{ end }}
+<div class="{{ $stickyClass }}">
+    {{- .Inner| markdownify -}}
+</div>
+  
