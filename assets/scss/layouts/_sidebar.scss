@@ -2,7 +2,7 @@
 .docs-toc,
 .offcanvas-body {
   scrollbar-width: thin;
-  scrollbar-color: $white $white;
+  scrollbar-color: transparent transparent;
 }
 
 .docs-links::-webkit-scrollbar,
@@ -27,7 +27,7 @@
 .docs-toc:hover,
 .offcanvas-body:hover {
   scrollbar-width: thin;
-  scrollbar-color: $gray-200 $white;
+  scrollbar-color: $gray-200 transparent;
 }
 
 .docs-links:hover::-webkit-scrollbar-thumb,
