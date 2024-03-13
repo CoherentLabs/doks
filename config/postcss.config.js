@@ -39,6 +39,7 @@ module.exports = {
           path.join(__dirname, '../assets/scss/components/_syntax.scss'),
           path.join(__dirname, '../assets/scss/components/_search.scss'),
           path.join(__dirname, '../assets/scss/common/_dark.scss'),
+          path.join(__dirname, '../assets/scss/layouts/_pages.scss'),
           './node_modules/bootstrap/scss/_dropdown.scss',
           './node_modules/katex/dist/katex.css',
         ]),
