@@ -24,16 +24,18 @@
     {{ partial "footer/footer.html" . }}
     {{ partial "footer/script-footer.html" . }}
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.Params.tagManagerId }}"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+    {{ with $managerId := .Site.Params.tagManagerId }}
+      <!-- Google tag (gtag.js) -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id={{ $managerId }}"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-      gtag('config', {{ .Site.Params.tagManagerId }});
-    </script>
+        gtag('config', {{ $managerId }});
+      </script>
 
-    {{ partial "content/google-analytics-events.html" . }}
+      {{ partial "content/google-analytics-events.html" . }}
+    {{ end }}
   </body>
 </html>
