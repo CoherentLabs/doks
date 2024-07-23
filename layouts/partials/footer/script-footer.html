@@ -61,10 +61,10 @@
   {{ $slice = $slice | append $katexConfig -}}
 {{ end -}}
 
+{{ $cookieConsentPlugin := resources.Get "vanilla-cookieconsent/cookieconsent.umd.js" -}}
 {{ if .Site.Params.options.cookieConsent }}
-  {{ $cookieConsentPlugin := resources.Get "vanilla-cookieconsent/cookieconsent.js" -}}
   {{ $cookieConsentInit := resources.Get "js/cookieconsent-init.js" | resources.ExecuteAsTemplate "js/cookieconsent-init.js" . | minify | fingerprint "sha256" -}}
-  {{ $slice = $slice | append $cookieConsentPlugin | append $cookieConsentInit -}}
+  {{ $slice = $slice | append $cookieConsentInit -}}
 {{ end -}}
 
 <script>
@@ -75,6 +75,9 @@
 </script>
 {{ $js := $slice | resources.Concat "main.js" -}}
 {{ if eq (hugo.Environment) "development" -}}
+  {{ if (.Site.Params.options.cookieConsent) -}}
+  <script src="{{ $cookieConsentPlugin.RelPermalink }}" defer></script>
+  {{ end -}}
   {{ if eq .Title "Search"}}
     {{ if (.Site.Params.options.flexSearch) -}}
     <script src="{{ $fullSearch.RelPermalink }}" defer></script>
@@ -103,6 +106,9 @@
   {{ end -}}
 {{ else -}}
   {{ $js := $js | minify | fingerprint "sha256" -}}
+  {{ if (.Site.Params.options.cookieConsent) -}}
+    <script src="{{ $cookieConsentPlugin.RelPermalink }}" integrity="{{ $cookieConsentPlugin.Data.Integrity }}" crossorigin="anonymous" defer></script>
+  {{ end -}}
   {{ $searchUtilities := $searchUtilities | minify | fingerprint "sha256" -}}
   {{ if eq .Title "Search"}}
   {{ $fullSearch := $fullSearch | minify | fingerprint "sha256" -}}
